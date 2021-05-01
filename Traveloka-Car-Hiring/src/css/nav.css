@@ -1,0 +1,57 @@
+
+.header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+  }
+  .header + .body {
+    padding-top: 6%;
+  }
+  nav {
+    background-color: white;
+    padding: 10px 125px;
+  }
+  .main-nav ul,
+  .main-nav img {
+    height: 36px;
+  }
+  nav ul {
+    list-style: none;
+    display: inline-flex;
+    float: right;
+  }
+  nav ul li {
+    margin-right: 30px;
+  }
+  nav ul li a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+  }
+  nav ul li img.service-logo {
+    width: 20px;
+    margin-right: 8px;
+  }
+  .services-nav {
+    background-color: rgba(242, 243, 243, 1);
+    height: 35px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  .services-nav ul {
+    float: none;
+  }
+  .services-nav ul li {
+    margin-top: 6px;
+    margin-bottom: 5px;
+  }
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  img {
+    max-width: 100%;
+  }

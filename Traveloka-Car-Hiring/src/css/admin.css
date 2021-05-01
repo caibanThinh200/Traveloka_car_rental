@@ -1,0 +1,193 @@
+.ant-menu-submenu-title span{
+    color: white;
+    margin-left: 10px;
+}
+.ant-skeleton-content{
+    width: 100%;
+    position: absolute;
+}
+.navbar-admin.col-3, .navbar-admin.col-9{
+    padding: 0;
+}
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected {
+    background-color: #f6f6f6;
+}
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected span{
+    color: black;
+}
+.ant-menu-dark.ant-menu-dark:not(.ant-menu-horizontal) .ant-menu-item-selected a{
+    color: black;
+}
+.menu-title{
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 50px;
+}
+.menu-title h4{
+    color: orange;
+    display: block;
+    transform: translateY(-2px);
+    margin: 0 20px;
+}
+.navbar-admin{
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+    height: 50px;
+}
+.container-fluid.navbar-admin{
+    padding: 0;
+    overflow-x: hidden;
+}
+.admin-infor{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+.sub-menu{
+    background-color: #fff;
+    width: 170px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.sub-menu .option{
+    cursor: pointer;
+    margin: 0;
+    display: block;
+    padding: 10px;
+    border-bottom: 1px solid #f6f6f6;
+    width: 100%;
+}
+#hello-text{
+    font-size: 18px;
+    margin: 0;
+    margin-right: 15px;
+}
+.user-icon {
+    margin: 0;
+    font-size: 30px;
+    cursor: pointer;
+    margin-right: 20px;
+}
+.user-icon i{
+    color: silver;
+    transform: translateY(1px);
+}
+.container-fluid.component{
+    margin-top: 50px;
+    background-color: #eee;
+}
+table.table{
+    background-color: #fff;
+    border-right: 1px solid #eee;
+    border-left: 1px solid #eee;
+}
+table.table button{
+    margin: 2px 0;
+    margin-right: 10px;
+    height: 30px;
+    color: white;
+    width: 65px;
+    border-style: none;
+    border-radius: 6px;
+}
+table.table .btn-delete{
+    background-color: white;
+    border: 1px solid orangered;
+    color: orangered;
+}
+table.table .btn-edit{
+    background-color: #52BE80;
+    background-color: orange;
+}
+.component .form{
+    background-color: #eee;
+}
+.component .form .form-header{
+    background-color: #f6f6f6;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+
+}
+.component .form h5{
+    color: teal;
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    line-height: 40px;
+    font-size: 1.1rem;
+    padding-left: 10px;
+    border-radius: 5px;
+    background-color: rgb(240, 234, 234);
+    text-transform: uppercase;
+    font-weight: bolder;
+    letter-spacing: 1px;
+}
+
+.component .form input{
+    background-color: #f6f6f6;
+}
+.ant-select:not(.ant-select-customize-input) .ant-select-selector{
+    background-color: #f6f6f6;
+}
+
+.component .form .btn-add{
+    width: 50%;
+    height: 38px;
+    border-style: none;
+    margin: 10px 0;
+    background-color: #fcba07;
+    color: rgb(255, 255, 255);
+    text-transform: uppercase;
+    border-radius: 10px;
+    transition: 0.4s;
+}
+.component .form .btn-add:hover{
+    box-shadow: 1px 5px 20px rgba(0, 0, 0, 0.2);
+}
+.component .form .btn-add:active{
+    transform: scale(1.05);
+} 
+.component .form .btn-add i{
+    margin-right: 6px;
+}
+.modal-btn{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+.modal-btn .btn-delete{
+    width: 100px;
+    height: 35px;
+    color: white;
+    background-color: rgb(255, 196, 0);
+    border-radius: 2px;
+    border-style: none;
+}
+.car-infor{
+    animation: toRight 1s;
+}
+.edit-form{
+    animation: toTop 1s;
+}
+table.table tr{
+    animation: appear 1.2s;
+}
+@keyframes toRight{
+    from{transform: translateX(-100px); opacity: 0.5;}
+    to{transform: translateX(0); opacity: 1;}
+}
+@keyframes toTop{
+    from{transform: translateY(100px); opacity: 0.5;}
+    to{transform: translateY(0); opacity: 1;}
+}
+@keyframes appear{
+    from{opacity: 0;}
+    to{opacity: 1;}
+}

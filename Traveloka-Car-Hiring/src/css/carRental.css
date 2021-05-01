@@ -1,0 +1,178 @@
+
+.banner{
+    height: 300px;
+    width: 100%;
+    background: #56CCF2;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, #2F80ED, #56CCF2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, #2F80ED, #56CCF2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.form-container{
+    width: 100%;
+    transform: translateY(-60px);
+    box-shadow: 1px 6px 15px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+.form-container label{
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.form-container .col-sm-3{
+    padding: 0;
+    margin-bottom: 10px;
+}
+.form-container .col-sm-2{
+    padding: 0 20px;
+    margin-bottom: 10px;
+}
+.form-container .col-6{
+    margin-top: 15px;
+}
+.form-container .find-car-form .form-header{
+    background-color: rgb(245, 243, 243);
+    padding: 10px 20px;
+}
+.form-container .find-car-form .form-header label{
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.form-container .find-car-form select{
+    height: 35px;
+    width: 200px;
+    padding-left: 12px;
+    display: block;
+    border: 1px solid silver;
+    border-radius: 5px;
+    outline: none;
+}
+.form-container .find-car-form .form-body{
+    padding: 10px 20px;
+    padding-bottom: 20px;
+}
+.form-container .find-car-form .form-body .input-group{
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    margin: 10px 0;
+    margin-bottom: 20px;
+}
+.form-container .find-car-form .form-body .input-group span{
+    display: flex;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgb(235, 226, 226);
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+}
+.form-container .find-car-form .form-body .input-group input{
+    outline: none;
+    border: 1px solid rgb(235, 226, 226);
+    height: 40px;
+    width: 50%;
+    display: block;
+    padding-left: 15px;
+    
+}
+.form-container .find-car-form .ant-picker {
+    width: 100%;
+}
+.form-container .find-car-form .form-btn{
+    display: flex;
+    align-items: flex-end;
+}
+.form-container .find-car-form a{
+    width: 100%;
+    height: 35px;
+    border-style: none;
+    color: white;
+    background-color: orangered;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 17px;
+}
+
+.introduction h4, .introduction h5{
+    font-weight: bolder;
+    margin-bottom: 10px;
+}
+.introduction h4{
+    margin-bottom: 17px;
+}
+.brands{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.brands .img-box{
+    width: 20%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-bottom: 30px;
+}
+.form-container.infor{
+    padding: 20px;
+    padding-bottom: 0;
+    transform: translateY(-40px);
+}
+.car{
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #eee;
+    box-shadow: 1px 5px 15px rgba(0, 0, 0, 0.06);
+    border-radius: 6px;
+    animation: appear 1s;
+}
+@keyframes appear{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }
+}
+.car .image{
+    height: 100%;
+    width: 100%;
+    background-color: #d3dadf;
+    display: flex;
+    justify-content: center;
+    align-items:  center;
+    color: white;
+}
+.car .name{
+    font-size: 20px;
+    font-weight: bold;
+}
+.car .price{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+}
+.car #price{
+    color: red;
+    font-weight: bold;
+    margin: 0;
+    font-size: 25px;
+}
+.car .price #text{
+    color: grey;
+    margin: 0;
+}
+.car .price a span{
+    background-color: orangered;
+    color: white;
+    line-height: 35px;
+    width: 150px;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    border-radius: 8px;
+    display: flex;
+    margin-top: 30px;
+}

@@ -1,0 +1,26 @@
+export const image = {
+    imageBrand:[
+        process.env.PUBLIC_URL + '/images/brand1.png',
+        process.env.PUBLIC_URL + '/images/brand2.png',
+        process.env.PUBLIC_URL + '/images/brand3.png',
+        process.env.PUBLIC_URL + '/images/brand4.png',
+        process.env.PUBLIC_URL + '/images/brand5.png',
+        process.env.PUBLIC_URL + '/images/brand6.png',
+        process.env.PUBLIC_URL + '/images/brand7.png',
+        process.env.PUBLIC_URL + '/images/brand8.png',
+        process.env.PUBLIC_URL + '/images/brand9.png',
+        process.env.PUBLIC_URL + '/images/brand10.png',
+        process.env.PUBLIC_URL + '/images/brand11.png',
+        process.env.PUBLIC_URL + '/images/brand12.png',
+        process.env.PUBLIC_URL + '/images/brand13.png',
+        process.env.PUBLIC_URL + '/images/brand14.png',
+        process.env.PUBLIC_URL + '/images/brand15.png',
+        process.env.PUBLIC_URL + '/images/brand16.png',
+        process.env.PUBLIC_URL + '/images/brand17.png',
+        process.env.PUBLIC_URL + '/images/brand18.png',
+        process.env.PUBLIC_URL + '/images/brand19.png',
+        process.env.PUBLIC_URL + '/images/brand20.png',
+        process.env.PUBLIC_URL + '/images/brand21.png',
+        process.env.PUBLIC_URL + '/images/brand22.png',
+    ]
+};
