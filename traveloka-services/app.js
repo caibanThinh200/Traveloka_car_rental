@@ -16,9 +16,11 @@ app.get("/", (req, res, next) => {
 
 const UserRoute = require("./Route/User");
 const CarRoute = require("./Route/Car");
+const Manufactor = require("./Route/Manufactor");
 
 app.use("/user", UserRoute);
 app.use("/car", CarRoute);
+app.use("/manu", Manufactor);
 
 app.get("*", (req, res, next) => {
     res.status(404).send("API not found");
