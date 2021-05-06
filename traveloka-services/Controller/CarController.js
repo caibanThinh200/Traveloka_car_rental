@@ -6,7 +6,7 @@ class CarController {
     static async AddCarController(req, res, next) {
         try {
             const { idSaler, quantity, Seat, idManufactor, typeCar, self_drive_price, driver_price, insurance } = req.body;
-            // const filename = req.file.filename ? req.file.filename : '';
+            const filename = req.file.filename ? req.file.filename : '';
             const insertCar = {
                 id: uuid.v4(),
                 idSaler,
@@ -17,7 +17,7 @@ class CarController {
                 self_drive_price,
                 driver_price,
                 insurance,
-                // avatar: filename,
+                avatar: filename,
                 created_at: new Date
             }
             database().then(async pool => {

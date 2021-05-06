@@ -7,6 +7,7 @@ const AddManufactor =
             '${code}',
             '${created_at}'
         )`
+        
 const GetManufactor = () => 'SELECT * FROM Manufactor';
 
 module.exports = {

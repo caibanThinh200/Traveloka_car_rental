@@ -13,10 +13,10 @@ const addUser = ({ id, fullname, phoneNum, gmail, password, role, company, creat
     )`;
 
 const getUserByGmail = (gmail) =>
-    `SELECT * FROM UserAccount WHERE gmail = '${gmail}'`
+    `SELECT * FROM UserAccount WHERE gmail = '${gmail}'`;
 
 const getUserById = (id) =>
-    `SELECT * FROM UserAccount WHERE id = '${id}'`
+    `SELECT * FROM UserAccount WHERE id = '${id}'`;
 
 
 module.exports = {
