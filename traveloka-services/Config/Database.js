@@ -1,19 +1,23 @@
 require("dotenv").config();
 const mssql = require("mssql");
 
-const config = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.HOST,
-    database: process.env.DB_NAME,
-    options: {
-        instanceName: "SQLEXPRESS",
-        encrypt: false,
-    },
-}
+
 async function connect() {
+    console.log(process.env)
     try {
-        const pool = await mssql.connect(config);
+        const config = {
+            user: process.env.MSSQL_USER,
+            password: process.env.SA_PASSWORD,
+            server: "localhost",
+            database: process.env.MSSQL_DB,
+            port: process.env.PORT_DB,
+            options: {
+                port: process.env.PORT_DB
+            }
+        }
+        const pool = await mssql.connect(config, (err) => {
+            console.log("err: ", err)
+        }); 
         console.log("DB connected")
         return pool
     } catch (e) {

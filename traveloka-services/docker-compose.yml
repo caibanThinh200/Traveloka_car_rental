@@ -1,0 +1,27 @@
+version: '3.2'
+services: 
+  users-service:
+    build: 
+        context: .
+        dockerfile: "./Dockerfile"
+
+    depends_on:
+        - users-service-db
+    ports:
+        - 127.0.0.1:3301:3301
+    environment:
+        - JWT_SECRET_KEY=2222222
+        - PORT=3301
+    volumes:  
+        - ./:/opt/app
+        
+  users-service-db:
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_DB=TravelokaCarHiring
+      - MSSQL_USER=travelokas
+      - MSSQL_PASSWORD=QuocThinh123
+      - SA_PASSWORD=QuocThinh123
+    image: mcmoe/mssqldocker
+    ports:
+      - 127.0.0.1:1433:1433
