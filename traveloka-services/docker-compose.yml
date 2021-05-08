@@ -1,0 +1,28 @@
+version: "3.2"
+services: 
+    service:
+        build: 
+            context: .
+            dockerfile: "./Dockerfile"
+
+        depends_on:
+            - service-db
+        ports:
+            - "3301:3301"
+        environment:
+            - PORT=3301
+            - HOST=172.20.0.1
+            - MSSQL_DB=TravelokaCarHiring
+            - MSSQL_USER=travelokas
+            - PASS_DB=123456
+            - PORT_DB=1435
+    service-db:
+        environment:
+            - ACCEPT_EULA=Y
+            - SA_PASSWORD=123456
+            - MSSQL_DB=TravelokaCarHiring
+            - MSSQL_USER=travelokas
+            - MSSQL_PASSWORD=123456
+        image: mcmoe/mssqldocker
+        ports:
+            - 0.0.0.0:1435:1433
