@@ -1,24 +1,19 @@
 require("dotenv").config();
-const mssql = require("mssql");
+const mysql = require("mysql");
+const config = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME
+});
 
-const config = {
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    server: process.env.HOST,
-    database: process.env.DB_NAME,
-    options: {
-        instanceName: "SQLEXPRESS",
-        encrypt: false,
-    },
-}
-async function connect() {
-    try {
-        const pool = await mssql.connect(config);
-        console.log("DB connected")
-        return pool
-    } catch (e) {
-        console.log(e)
-    }
-}
+config.connect(err => {
+  if (err){
+    console.log(err);
+  }
+  else{
+    console.log("DB connected");
+  }
+})
 
-module.exports = connect;
+module.exports = config;
