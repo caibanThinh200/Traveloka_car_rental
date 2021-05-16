@@ -1,3 +1,20 @@
+const carSchema = () => `create table Car (
+    id varchar(255) primary key,
+    idSaler varchar(255) not null,
+    quantity int,
+    HiredCount int default 0,
+    HiringCount int default 0,
+    Seat int,
+    idManufactor varchar(255) not null,
+    avatar varchar(255) ,
+    typeCar nvarchar(255) not null,
+    self_drive_price int,
+    driver_price int,
+    insurance nvarchar(255),
+    created_at varchar(255),
+    updated_at varchar(255)
+   )`
+ 
 const addCar = ({
     id,
     idSaler,
@@ -54,4 +71,5 @@ module.exports = {
     getCarById,
     getCarByIdManufactor,
     updateCarById,
+    carSchema
 }
