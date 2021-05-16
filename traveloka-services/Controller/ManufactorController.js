@@ -1,27 +1,18 @@
 const database = require("../Config/Database");
 const uuid = require("uuid");
 const querryState = require("../Operation/Manufactor");
-
+const { DataQuerry, DataMutation, DataQuerries } = require("../Util");
 class ManufactorController {
     static async AddManufactorController(req, res, next) {
         try {
             const { name, code } = req.body;
-            console.log(name, code)
             const insertData = {
                 id: uuid.v4(),
                 name: name || "No name",
                 code: code || "No code",
                 created_at: new Date
             }
-            database().then(async pool => {
-                await pool.request()
-                    .query(querryState.AddManufactor(insertData))
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    result: "Add manufactor success"
-                })
-            })
+            DataMutation(querryState.AddManufactor(insertData), res, 'Aadd Success')
         } catch (e) {
             console.log(e);
             res.json({
@@ -36,15 +27,7 @@ class ManufactorController {
     }
     static async GetManufactorController(req, res, next) {
         try {
-            database().then(async pool => {
-                const manufactors = await pool.request()
-                    .query(querryState.GetManufactor());
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    manufactors:manufactors.recordset
-                })
-            })
+            DataQuerries(querryState.GetManufactor(), res)
         } catch (e) {
             console.log(e);
             res.json({

@@ -28,7 +28,7 @@ const addCar = ({
     insurance,
     created_at,
     name
-
+  
 }) => {
     const insertData = `'${id}','${idSaler}','${quantity}','${name}',
     '${Seat}','${avatar}','${idManufactor}','${typeCar}','${self_drive_price}',
