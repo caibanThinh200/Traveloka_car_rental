@@ -1,6 +1,7 @@
 const database = require("../Config/Database");
 const uuid = require("uuid");
 const querryState = require("../Operation/Manufactor");
+const { DataMutation, DataQuerries } = require("../Util");
 
 class ManufactorController {
     static async AddManufactorController(req, res, next) {
@@ -13,22 +14,14 @@ class ManufactorController {
                 code: code || "No code",
                 created_at: new Date
             }
-            database().then(async pool => {
-                await pool.request()
-                    .query(querryState.AddManufactor(insertData))
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    result: "Add manufactor success"
-                })
-            })
+            DataMutation(querryState.AddManufactor(insertData), res, "Add manufactor success");
         } catch (e) {
             console.log(e);
             res.json({
                 status: "FAILED",
                 error: {
-                    code:1000,
-                    message:"Add manufactor failed"
+                    code: 1000,
+                    message: "Add manufactor failed"
                 },
                 result: null
             })
@@ -36,22 +29,14 @@ class ManufactorController {
     }
     static async GetManufactorController(req, res, next) {
         try {
-            database().then(async pool => {
-                const manufactors = await pool.request()
-                    .query(querryState.GetManufactor());
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    manufactors:manufactors.recordset
-                })
-            })
+            DataQuerries(querryState.GetManufactor(),res);
         } catch (e) {
             console.log(e);
             res.json({
                 status: "FAILED",
                 error: {
-                    code:1000,
-                    message:"Get manufactor failed"
+                    code: 1000,
+                    message: "Get manufactor failed"
                 },
                 result: null
             })
