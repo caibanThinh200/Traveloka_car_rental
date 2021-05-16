@@ -1,7 +1,8 @@
 const database = require("../Config/Database");
 const uuid = require("uuid");
 const querryState = require("../Operation/Manufactor");
-const { DataQuerry, DataMutation, DataQuerries } = require("../Util");
+const { DataMutation, DataQuerries } = require("../Util");
+
 class ManufactorController {
     static async AddManufactorController(req, res, next) {
         try {
@@ -12,14 +13,14 @@ class ManufactorController {
                 code: code || "No code",
                 created_at: new Date
             }
-            DataMutation(querryState.AddManufactor(insertData), res, 'Aadd Success')
+            DataMutation(querryState.AddManufactor(insertData), res, "Add manufactor success");
         } catch (e) {
             console.log(e);
             res.json({
                 status: "FAILED",
                 error: {
-                    code:1000,
-                    message:"Add manufactor failed"
+                    code: 1000,
+                    message: "Add manufactor failed"
                 },
                 result: null
             })
@@ -33,8 +34,8 @@ class ManufactorController {
             res.json({
                 status: "FAILED",
                 error: {
-                    code:1000,
-                    message:"Get manufactor failed"
+                    code: 1000,
+                    message: "Get manufactor failed"
                 },
                 result: null
             })

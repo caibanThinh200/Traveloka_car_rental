@@ -54,7 +54,7 @@ const updateCarById = (id, car) =>
        insurance = '${car.insurance} '
     WHERE id = '${id}'`
    
-const getCarByIdManufactor = (idManufactor) => {
+const getCarByIdManufactor = idManufactor => {
     let listCar = '';
     idManufactor.forEach((id, index) => {
         if (index === 0) {

@@ -13,6 +13,7 @@ const DataMutation = (querry, response, message) => {
         }
     }) 
 }
+
 const DataQuerries = (querry, response, message) => {
     config.query(querry, (err, resPacket) => {
         const res = DataParser(resPacket);
@@ -25,6 +26,7 @@ const DataQuerries = (querry, response, message) => {
         }
     })
 }
+
 const DataQuerry = (querry, response, message) => {
     config.query(querry, (err, resPacket) => {
         const res = DataParser(resPacket);
