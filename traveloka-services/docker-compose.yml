@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 version: "3.2"
 services: 
     service:
@@ -26,3 +27,27 @@ services:
         image: mcmoe/mssqldocker
         ports:
             - 0.0.0.0:1435:1433
+=======
+version: '3.2'
+services: 
+  users-service:
+    build: 
+        context: .
+        dockerfile: ./Dockerfile
+
+    depends_on:
+        - users-service-db
+    ports:
+        - 127.0.0.1:3301:3301
+    volumes:  
+        - ./:/opt/app
+        - ./app/node_modules
+        
+  users-service-db:
+    env_file: ./.env
+    environment:
+      - ACCEPT_EULA=Y
+    image: mcmoe/mssqldocker
+    ports:
+      - 127.0.0.1:1435:1434
+>>>>>>> af22a9ac17af441c11ff42177bf1e6771e026a36

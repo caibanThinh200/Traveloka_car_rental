@@ -1,12 +1,16 @@
 const database = require("../Config/Database");
 const querryState = require("../Operation/Car");
+const querryStateMent = require("../Operation/User")
 const uuid = require("uuid");
+const { DataQuerry, DataMutation, DataQuerries } = require("../Util");
+const { json } = require("body-parser");
 
 class CarController {
     static async AddCarController(req, res, next) {
         try {
-            const { idSaler, quantity, Seat, idManufactor, typeCar, self_drive_price, driver_price, insurance, name } = req.body;
-            const filename = req.file.filename ? req.file.filename : '';
+            const {  quantity, Seat, idManufactor, typeCar, self_drive_price, driver_price, insurance, name } = req.body;
+            const {idSaler} = req.params
+            // const filename = req.file.filename ? req.file.filename : '';
             const insertCar = {
                 id: uuid.v4(),
                 idSaler,
@@ -18,19 +22,10 @@ class CarController {
                 self_drive_price,
                 driver_price,
                 insurance,
-                avatar: filename,
+                avatar: "",
                 created_at: new Date
             }
-            database().then(async pool => {
-                await pool.request()
-                    .query(querryState.addCar(insertCar))
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    result: "Add car success"
-                })
-
-            })
+            DataMutation(querryState.addCar(insertCar), res, 'Add success')
         } catch (e) {
             console.log(e);
             res.json({
@@ -45,15 +40,7 @@ class CarController {
     }
     static async GetListCarController(req, res, next) {
         try {
-            database().then(async pool => {
-                const cars = await pool.request()
-                    .query(querryState.getCars())
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    cars: cars.recordset
-                })
-            })
+            DataQuerries(querryState.getCars(), res)
         } catch (e) {
             console.log(e);
             res.json({
@@ -68,15 +55,7 @@ class CarController {
     static async GetCarByIdController(req, res, next) {
         try {
             const { id } = req.params;
-            database().then(async pool => {
-                const car = await pool.request()
-                    .query(querryState.getCarById(id));
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    car: car.recordset
-                })
-            })
+            DataQuerry(querryState.getCarById(id), res)
         } catch (e) {
             console.log(e);
         }
@@ -84,30 +63,30 @@ class CarController {
     static async UpdateCarByIdController(req, res, next) {
         try {
             const { id } = req.params;
-            const infoUpdate = req.body;
-            const filename = !req.file.filename ? '' : req.file.filename;
-            database().then(async pool => {
-                const car = await pool.request().query(querryState.getCarById(id));
-                const { name, quantity, Seat, idManufactor, self_drive_price, driver_price, insurance, typeCar } = car.recordset;
-                const update = {
-                    name: infoUpdate.name || name,
-                    quantity: infoUpdate.quantity || quantity,
-                    Seat: infoUpdate.Seat || Seat,
-                    idManufactor: infoUpdate.idManufactor || idManufactor,
-                    typeCar: infoUpdate.typeCar || typeCar,
-                    self_drive_price: infoUpdate.self_drive_price || self_drive_price,
-                    driver_price: infoUpdate.driver_price || driver_price,
-                    insurance: infoUpdate.insurance || insurance,
-                    avatar: filename,
-                    updated_at: new Date
-                }
-                await pool.request()
-                    .query(querryState.updateCarById(id, update));
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    message: "Update success!"
-                })
+            const infor = req.body
+            // const filename = !req.file.filename ? '' : req.file.filename;
+            database.query(querryState.getCarById(id), (err, result)=>{
+                const { 
+                    name, 
+                    quantity, 
+                    Seat, 
+                    idManufactor, 
+                    self_drive_price, 
+                    driver_price, 
+                    insurance, 
+                    typeCar 
+                        } = result[0]
+                const updateInfor = {
+                    name: infor.name || name,
+                    quantity: infor.quantity || quantity,
+                    Seat: infor.Seat || Seat,
+                    idManufactor: infor.idManufactor || idManufactor,
+                    self_drive_price: infor.self_drive_price || self_drive_price,
+                    driver_price: infor.driver_price || driver_price,
+                    insurance: infor.insurance || insurance,
+                    typeCar: infor.typeCar || typeCar,
+                }  
+                DataMutation(querryState.updateCarById(id, updateInfor), res, 'Update Success')            
             })
         } catch (error) {
             console.log(error)
@@ -123,15 +102,7 @@ class CarController {
     static async GetListCarByManufactorController(req, res, next) {
         try {
             const { idManufactor } = req.body;
-            database().then(async pool => {
-                const car = await pool.request()
-                    .query(querryState.getCarByIdManufactor(idManufactor));
-                res.json({
-                    status: "SUCCESS",
-                    error: null,
-                    car: car.recordset,
-                })
-            })
+            console.log(1)
         } catch (error) {
             console.log(error)
             res.json({
