@@ -65,11 +65,17 @@ const getCarByIdManufactor = idManufactor => {
     return `SELECT * FROM Car WHERE ${listCar}`
 }
 
+const getCarsByIdDistrict = idDistrict => `SELECT * FROM AvailableCar WHERE idDistrict = '${idDistrict}'`;
+
+const addDistrictAvailable = (idCar,idDistrict) => `INSERT INTO  AvailableCar(idCar,idDistrict) VALUES ('${idCar}','${idDistrict}')`;
+
 module.exports = {
     addCar,
     getCars,
     getCarById,
     getCarByIdManufactor,
     updateCarById,
-    carSchema
+    carSchema,
+    addDistrictAvailable,
+    getCarsByIdDistrict
 }

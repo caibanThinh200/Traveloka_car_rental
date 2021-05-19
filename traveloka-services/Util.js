@@ -17,6 +17,7 @@ const DataMutation = (querry, response, message) => {
 const DataQuerries = (querry, response, message) => {
     config.query(querry, (err, resPacket) => {
         const res = DataParser(resPacket);
+        console.log(res,querry);
         if (res) {
             response.json({
                 status: "SUCCESS",

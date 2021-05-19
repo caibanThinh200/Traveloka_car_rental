@@ -3,14 +3,13 @@ const querryState = require("../Operation/Car");
 const querryStateMent = require("../Operation/User")
 const uuid = require("uuid");
 const { DataQuerry, DataMutation, DataQuerries } = require("../Util");
-const { json } = require("body-parser");
 
 class CarController {
     static async AddCarController(req, res, next) {
         try {
             const {  quantity, Seat, idManufactor, typeCar, self_drive_price, driver_price, insurance, name } = req.body;
             const {idSaler} = req.params
-            // const filename = req.file.filename ? req.file.filename : '';
+            const filename = req.file.filename ? req.file.filename : '';
             const insertCar = {
                 id: uuid.v4(),
                 idSaler,
@@ -22,7 +21,7 @@ class CarController {
                 self_drive_price,
                 driver_price,
                 insurance,
-                avatar: "",
+                avatar: filename,
                 created_at: new Date
             }
             DataMutation(querryState.addCar(insertCar), res, 'Add success')
@@ -75,7 +74,8 @@ class CarController {
                     driver_price, 
                     insurance, 
                     typeCar 
-                        } = result[0]
+                    } = result[0];
+                
                 const updateInfor = {
                     name: infor.name || name,
                     quantity: infor.quantity || quantity,
@@ -102,7 +102,6 @@ class CarController {
     static async GetListCarByManufactorController(req, res, next) {
         try {
             const { idManufactor } = req.body;
-            console.log(1)
         } catch (error) {
             console.log(error)
             res.json({
@@ -110,6 +109,36 @@ class CarController {
                 error: {
                     code: 1000,
                     message: "Get list car failed"
+                }
+            })
+        }
+    }
+    static async AddDistrictAvailable(req,res,next){
+        try{
+            const {idDistrict,idCar} = req.body;
+            DataMutation(querryState.addDistrictAvailable(idCar,idDistrict), res, "Add car success");
+        }catch(e){
+            console.log(e);
+            res.json({
+                status: 'FAILED',
+                error: {
+                    code: 1000,
+                    message: "Add car failed"
+                }
+            })
+        }
+    }
+    static async GetAvailableCarByDistrict(req,res,next){
+        try{
+            const {idDistrict} = req.query;
+            DataQuerries(querryState.getCarsByIdDistrict(idDistrict),res);
+        }catch(e){
+            console.log(e);
+            res.json({
+                status: 'FAILED',
+                error: {
+                    code: 1000,
+                    message: "Get list cars failed"
                 }
             })
         }
