@@ -19,7 +19,8 @@ class UserController {
                 company: role === "saler" ? company : '',
                 gmail: gmail || "",
                 password: bcrypt.hashSync(password, 10),
-                // password: bcrypt.hashSync(password, 10),
+                //password: bcrypt.hashSync(password, 10),
+                avatar:"",
                 created_at: new Date
             };
             DataMutation(querryStatement.addUser(insertUser), res, 'Add user success')

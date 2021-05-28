@@ -7,8 +7,7 @@ const { DataQuerry, DataMutation, DataQuerries } = require("../Util");
 class CarController {
     static async AddCarController(req, res, next) {
         try {
-            const {  quantity, Seat, idManufactor, typeCar, self_drive_price, driver_price, insurance, name } = req.body;
-            const {idSaler} = req.params
+            const { idSaler, quantity, Seat, idManufactor, typeCar, self_drive_price, driver_price, insurance, name } = req.body;
             const filename = req.file.filename ? req.file.filename : '';
             const insertCar = {
                 id: uuid.v4(),
