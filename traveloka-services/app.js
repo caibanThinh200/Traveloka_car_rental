@@ -19,13 +19,15 @@ const Manufactor = require("./Route/Manufactor");
 const CountryRoute = require("./Route/Country");
 const CityRoute = require("./Route/City");
 const DistrictRoute = require("./Route/District");
+const BillRoute = require("./Route/Bill");
 
 app.use("/user", UserRoute);
 app.use("/car", CarRoute);
 app.use("/manu", Manufactor);
-app.use("/country",CountryRoute);
-app.use("/city",CityRoute);
-app.use("/district",DistrictRoute);
+app.use("/country", CountryRoute);
+app.use("/city", CityRoute);
+app.use("/district", DistrictRoute);
+app.use("/bill", BillRoute);
 
 app.get("*", (req, res, next) => {
     res.status(404).send("API not found");

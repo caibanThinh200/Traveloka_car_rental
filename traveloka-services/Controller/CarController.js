@@ -64,7 +64,7 @@ class CarController {
             const { id } = req.params;
             const infor = req.body
             // const filename = !req.file.filename ? '' : req.file.filename;
-            database.query(querryState.getCarById(id), (err, result)=>{
+            database.query(querryState.getCarById(id), (err, result) => {
                 const { 
                     name, 
                     quantity, 
@@ -143,5 +143,6 @@ class CarController {
             })
         }
     }
+
 }
 module.exports = CarController;
