@@ -11,7 +11,7 @@ class CountryController {
                 name : name || "",
                 code: code || ""
             };
-            DataMutation(AddCountry(insertCountry),res,"Add country success");
+            DataMutation(AddCountry(insertCountry), res, "Add country success");
         } catch (e) {
             console.log(e);
             res.json({

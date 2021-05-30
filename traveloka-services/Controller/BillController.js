@@ -1,7 +1,11 @@
-import { DataMutation, DataQuerries, DataQuerry, DataParser } from "../Util"
-import { AddBill, GetBillById, GetListBill, UpdateBillStatus } from "../Operation/Bill"; 
-import QuerryBuilder from "../Config/Database";
-import uuid from "uuid";
+const { DataMutation, DataQuerries, DataQuerry, DataParser } = require("../Util")
+const { AddBill, GetBillById, GetListBill, UpdateBillStatus } = require("../Operation/Bill"); 
+const QuerryBuilder = require("../Config/Database");
+const uuid = require("uuid");
+const Stripe = require("stripe");
+require("dotenv").config();
+
+const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 
 class BillController {
     static async AddBillController(req,res,next) {
@@ -78,6 +82,40 @@ class BillController {
                 },
                 result: null
             })
+        }
+    }
+    static async StripePaymentController (req,res,next) {
+        try{
+            stripe.customers
+            .create({
+              email: 'customer@example.com',
+            })
+            .then((customer) => {
+              // have access to the customer object
+              return stripe.invoiceItems
+                .create({
+                  customer: customer.id, // set the customer id
+                  amount: 2500, // 25
+                  currency: 'usd',
+                  source:"tok_amex",
+                  description: 'One-time setup fee',
+                })
+                .then((invoiceItem) => {
+                    console.log(invoiceItem);
+                    return stripe.invoices.create({
+                    collection_method: 'send_invoice',
+                    customer: invoiceItem.customer,
+                  });
+                })
+                .then((invoice) => {
+                  // New invoice created on a new customer
+                })
+                .catch((err) => {
+                  // Deal with an error
+                });
+            });
+        } catch(e) {
+            console.log(e);
         }
     }
 }

@@ -1,8 +1,7 @@
 const database = require("../Config/Database");
 const querryState = require("../Operation/Car");
-const querryStateMent = require("../Operation/User")
 const uuid = require("uuid");
-const { DataQuerry, DataMutation, DataQuerries } = require("../Util");
+const { DataQuerry, DataMutation, DataQuerries, DataParser } = require("../Util");
 
 class CarController {
     static async AddCarController(req, res, next) {
@@ -101,6 +100,7 @@ class CarController {
     static async GetListCarByManufactorController(req, res, next) {
         try {
             const { idManufactor } = req.body;
+            DataQuerries(querryState.getCarByIdManufactor(idManufactor),res)
         } catch (error) {
             console.log(error)
             res.json({
@@ -114,7 +114,7 @@ class CarController {
     }
     static async AddDistrictAvailable(req,res,next){
         try{
-            const {idDistrict,idCar} = req.body;
+            const { idDistrict,idCar } = req.body;
             DataMutation(querryState.addDistrictAvailable(idCar,idDistrict), res, "Add car success");
         }catch(e){
             console.log(e);
@@ -129,8 +129,16 @@ class CarController {
     }
     static async GetAvailableCarByDistrict(req,res,next){
         try{
-            const {idDistrict} = req.query;
-            DataQuerries(querryState.getCarsByIdDistrict(idDistrict),res);
+            const { idDistrict } = req.query;
+            database.query(querryState.getCarsByIdDistrict(idDistrict),(err,result) => {
+                const availableCars = DataParser(result);
+                let arr = [];
+                availableCars.map(car => {
+                    arr.push(car.idCar);
+                })
+                DataQuerries(querryState.getCarByIdsDistrict(arr),res);
+            })
+            
         }catch(e){
             console.log(e);
             res.json({
@@ -140,6 +148,16 @@ class CarController {
                     message: "Get list cars failed"
                 }
             })
+        }
+    }
+    static async GetAvailableCarByCity(req,res,next) { 
+        try{
+            const { idCity } = req.query;
+            database.query((querryState.getDistrictsByIdCity(idCity)),(err , districts) => {
+                console.log(districts);
+            });
+        } catch(e) {
+            console.log(e);
         }
     }
 

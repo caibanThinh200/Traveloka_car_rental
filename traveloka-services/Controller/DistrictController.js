@@ -5,12 +5,12 @@ const querryState = require("../Operation/District");
 class DistrictController {
     static async AddDistrictController(req, res, next) {
         try {
-            const { name, code } = req.body;
+            const { name, code , idCity} = req.body;
             const insertDistrict = {
                 id : uuid.v4(),
                 name : name || "",
                 code: code || "",
-                idcity: uuid.v4(),
+                idCity: idCity || ""
             };
             DataMutation(querryState.AddDistrict(insertDistrict),res,"Add district success");
         } catch (e) {

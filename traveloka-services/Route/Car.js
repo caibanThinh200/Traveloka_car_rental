@@ -9,5 +9,6 @@ route.put("/:id", upload.single("image"), CarController.UpdateCarByIdController)
 route.get("/manufactor", CarController.GetListCarByManufactorController);
 route.post("/district",CarController.AddDistrictAvailable);
 route.get("/availableCar",CarController.GetAvailableCarByDistrict);
+route.get("/available/city",CarController.GetAvailableCarByCity);
 
 module.exports = route;
