@@ -96,6 +96,9 @@ const getCarByIdsDistrict = idDistrict => {
         return `SELECT * FROM AvailableCar WHERE ${listIds}`
     }
 }
+
+const getCarsBySalerId = idSaler => `SELECT * FROM Car WHERE idSaler = '${idSaler}'`
+
 module.exports = {
     addCar,
     getCars,
@@ -107,5 +110,6 @@ module.exports = {
     getCarsByIdDistrict,
     getDistrictsByIdCity,
     getCarByIdCars,
-    getCarByIdsDistrict
+    getCarByIdsDistrict,
+    getCarsBySalerId
 }

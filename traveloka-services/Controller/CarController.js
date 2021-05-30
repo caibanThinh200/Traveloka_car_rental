@@ -170,6 +170,21 @@ class CarController {
             });
         } catch(e) {
             console.log(e);
+            res.json({
+                status: 'FAILED',
+                error: {
+                    code: 1000,
+                    message: "Get list cars failed"
+                }
+            })
+        }
+    }
+    static async GetCarsBySalerController(req,res,next) {
+        try {
+            const { id } = req.body;
+            DataQuerries(querryState.getCarsBySalerId(id), res);
+        } catch(e) {
+            console.log(e);
         }
     }
 

@@ -18,7 +18,6 @@ const getUserByGmail = (gmail) =>
 const getUserById = (id) =>
     `SELECT * FROM UserAccount WHERE id = '${id}'`;
 
-
 module.exports = {
     getUsers,
     addUser,

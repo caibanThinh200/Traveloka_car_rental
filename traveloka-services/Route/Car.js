@@ -10,5 +10,6 @@ route.get("/manufactor", CarController.GetListCarByManufactorController);
 route.post("/district",CarController.AddDistrictAvailable);
 route.get("/availableCar",CarController.GetAvailableCarByDistrict);
 route.get("/available/city",CarController.GetAvailableCarByCity);
+route.get("/saler",CarController.GetCarsBySalerController);
 
 module.exports = route;
