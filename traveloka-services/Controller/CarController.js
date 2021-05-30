@@ -136,7 +136,7 @@ class CarController {
                 availableCars.map(car => {
                     arr.push(car.idCar);
                 })
-                DataQuerries(querryState.getCarByIdsDistrict(arr),res);
+                DataQuerries(querryState.getCarByIdCars(arr),res);
             })
             
         }catch(e){
@@ -154,7 +154,19 @@ class CarController {
         try{
             const { idCity } = req.query;
             database.query((querryState.getDistrictsByIdCity(idCity)),(err , districts) => {
-                console.log(districts);
+                let arrDistrictId = [];
+                let arrCarId = [];
+                const parseDistrict = DataParser(districts);
+                parseDistrict.forEach(district => {
+                    arrDistrictId.push(district.id);
+                })
+                database.query(querryState.getCarByIdsDistrict(arrDistrictId), (err ,result) => {
+                    const parsedResult = DataParser(result);
+                    parsedResult.forEach( car => {
+                        arrCarId.push(car.idCar)
+                    })
+                    DataQuerries(querryState.getCarByIdCars(arrCarId), res);
+                })
             });
         } catch(e) {
             console.log(e);

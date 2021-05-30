@@ -12,6 +12,7 @@ app.get("/", (req, res, next) => {
     res.send("welcome to Traveloka BE server");
 })
 
+app.use("/images", express.static("images"));
 
 const UserRoute = require("./Route/User");
 const CarRoute = require("./Route/Car");

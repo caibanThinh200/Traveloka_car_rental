@@ -71,21 +71,31 @@ const getDistrictsByIdCity = idCity => `SELECT * FROM District WHERE idCity = '$
 
 const addDistrictAvailable = (idCar,idDistrict) => `INSERT INTO  AvailableCar(idCar,idDistrict) VALUES ('${idCar}','${idDistrict}')`;
 
-const getCarByIdsDistrict = idDistrict => {
+const getCarByIdCars = idCar => {
     let listIds = '';
-    if(idDistrict.length > 0) {
-        idDistrict.forEach((id,index) => {
-            console.log(`${id} --- ${index}`)
+    if(idCar.length > 0) {
+        idCar.forEach((id,index) => {
             if (index === 0) {
                 listIds = `id = '${id}'`
             }
             else listIds += ` OR id = '${id}'` 
         });
-        console.log(`SELECT * FROM Car WHERE ${listIds}`);
         return `SELECT * FROM Car WHERE ${listIds}`
     }
 }
 
+const getCarByIdsDistrict = idDistrict => {
+    let listIds = '';
+    if(idDistrict.length > 0) {
+        idDistrict.forEach((id,index) => {
+            if (index === 0) {
+                listIds = `idDistrict = '${id}'`
+            }
+            else listIds += ` OR idDistrict = '${id}'` 
+        });
+        return `SELECT * FROM AvailableCar WHERE ${listIds}`
+    }
+}
 module.exports = {
     addCar,
     getCars,
@@ -96,5 +106,6 @@ module.exports = {
     addDistrictAvailable,
     getCarsByIdDistrict,
     getDistrictsByIdCity,
+    getCarByIdCars,
     getCarByIdsDistrict
 }
