@@ -36,7 +36,7 @@ class BillController {
                         status: "Waiting",
                         created_at : new Date
                     };
-                    DataMutation(AddBill(billInsert), res, "Thêm hóa đơn thành công");
+                    DataMutation(AddBill(billInsert), res, "idBill: " + billInsert.id);
                 }
             }
         } catch(e) {
@@ -78,7 +78,7 @@ class BillController {
             const { endDay } = req.body;
             const currentTime = new Date;
                 if ( currentTime.getDay() === endDay.getDay() && currentTime.getSeconds() === endDay.getSeconds()) {
-                   DataMutation(UpdateBillStatus( idBill, "Done" ), "Cập nhật hóa đơn thành công");
+                   DataMutation(UpdateBillStatus( idBill, "DONE" ), "Cập nhật hóa đơn thành công");
                 }
         } catch(e) {
             console.log(e);
