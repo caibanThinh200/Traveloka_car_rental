@@ -181,7 +181,7 @@ class CarController {
     }
     static async GetCarsBySalerController(req,res,next) {
         try {
-            const { id } = req.body;
+            const { id } = req.query;
             DataQuerries(querryState.getCarsBySalerId(id), res);
         } catch(e) {
             console.log(e);
