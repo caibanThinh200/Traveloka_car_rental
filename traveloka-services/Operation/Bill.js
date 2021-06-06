@@ -1,17 +1,19 @@
 const GetBillById = (id) => `SELECT * FROM Bill WHERE id = ${id}`;
 
-const AddBill = ({id, idUser, idSaler, total , rentalTime, status, listCar, created_at}) => 
-    `INSERT INTO Bill (id,idUser,id_saler,status,total,seconds,created_at,car) values 
+const AddBill = ({id, idUser, idSaler, total , startDate, endDate, status, idCar, created_at}) => {
+    return `INSERT INTO Bill (id,idUser,id_saler,status,total,startDate,endDate,created_at,idCar) values 
         (
             '${id}',
             '${idUser}',
             '${idSaler}',
             '${status}',
             '${total}',
-            '${rentalTime}',
+            '${startDate}',
+            '${endDate}',
             '${created_at}',
-            '${listCar}'
+            '${idCar}'
         )`;
+    }
 
 const UpdateBillStatus = (id,status) => `UPDATE Bill 
     WHERE id = '${id}' 

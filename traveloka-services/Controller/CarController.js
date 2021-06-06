@@ -22,7 +22,7 @@ class CarController {
                 avatar: filename,
                 created_at: new Date
             }
-            DataMutation(querryState.addCar(insertCar), res, 'Add success')
+            DataMutation(querryState.addCar(insertCar), res, 'A-+dd success')
         } catch (e) {
             console.log(e);
             res.json({
