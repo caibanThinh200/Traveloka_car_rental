@@ -10,7 +10,7 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 class BillController {
     static async AddBillController(req,res,next) {
         try {
-            const { idUser, total, startDate,endDate, listCar, idSaler } = req.body;
+            const { idUser, total, startDate,endDate, listCar, idSaler, address } = req.body;
             switch(false) {
                 case idSaler:
                     res.json("Invalid idSaler");
@@ -32,6 +32,7 @@ class BillController {
                         total : total || 0,
                         startDate: new Date(startDate) || "",
                         endDate: new Date(endDate) || "",
+                        address: address || "",
                         idCar : listCar || "",
                         status: "Waiting",
                         created_at : new Date

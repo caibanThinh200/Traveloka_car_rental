@@ -179,6 +179,7 @@ class CarController {
             })
         }
     }
+
     static async GetCarsBySalerController(req,res,next) {
         try {
             const { id } = req.query;

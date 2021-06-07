@@ -1,5 +1,6 @@
 const uuid = require("uuid");
-const {DataMutation, DataQuerries} = require("../Util")
+const database = require("../Config/Database");
+const {DataMutation, DataQuerries, DataParser} = require("../Util")
 const querryState = require("../Operation/District");
 
 class DistrictController {
@@ -39,6 +40,19 @@ class DistrictController {
                 result: null
             })
         }
+    }
+
+    static async GetAvailableDistrictByIdCar(req,res,next) {
+        try {
+            const { id } = req.params;
+            database.query(querryState.GetDistrictsByIdCar(id),(err, result)=> {
+                const ids = DataParser(result);
+                const idDistricts = ids.map(idDistrict =>  idDistrict.idDistrict);
+                DataQuerries(querryState.GetDistrictById(idDistricts), res);
+            })
+        } catch(e) {
+            console.log(e);
+        } 
     }
 }
 module.exports = DistrictController
