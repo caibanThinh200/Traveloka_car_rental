@@ -55,12 +55,8 @@ class BillController {
 
     static async StartTimeHiringController(req,res,next) {
         try {
-            const { idBill } = req.params
-            const { startDay } = req.body;
-            const currentTime = new Date;
-            if ( currentTime.getDay() === startDay.getDay() && currentTime.getSeconds() === startDay.getSeconds()) {
-               DataMutation(UpdateBillStatus( idBill, "In progress" ), "Cập nhật hóa đơn thành công");
-            }
+            const { id } = req.params
+               DataMutation(UpdateBillStatus( id, "In progress" ), res, "Cập nhật hóa đơn thành công");
         } catch(e) {
             console.log(e);
             res.json({

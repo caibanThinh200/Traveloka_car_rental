@@ -16,9 +16,11 @@ const AddBill = ({id, idUser, idSaler, total , address, startDate, endDate, stat
         )`;
     }
 
-const UpdateBillStatus = (id,status) => `UPDATE Bill 
-    WHERE id = '${id}' 
-    SET status = '${status}' `;
+const UpdateBillStatus = (id,status) => { 
+    return `UPDATE Bill 
+    SET status = '${status}'
+    WHERE id = '${id}' `;
+}
 
 const GetListBill = () => 'SELECT * FROM Bill';
 module.exports = {
