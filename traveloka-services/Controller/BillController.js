@@ -37,7 +37,7 @@ class BillController {
                         status: "Waiting",
                         created_at : new Date
                     };
-                    DataMutation(AddBill(billInsert), res, "idBill: " + billInsert.id);
+                    DataMutation(AddBill(billInsert), res, {id: billInsert.id , address: address});
                 }
             }
         } catch(e) {
