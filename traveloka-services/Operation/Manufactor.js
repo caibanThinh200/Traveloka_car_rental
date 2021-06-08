@@ -11,7 +11,10 @@ const AddManufactor =
         
 const GetManufactor = () => 'SELECT * FROM Manufactor';
 
+const GetManufactorByCode = code => `SELECT * FROM Manufactor WHERE code='${code}'`;
+
 module.exports = {
     AddManufactor,
-    GetManufactor
+    GetManufactor,
+    GetManufactorByCode
 }

@@ -13,9 +13,13 @@ const GetDistrictById = (ids) => {
         return `SELECT * FROM District WHERE ${districts}`;
     }    
 }
+
+const GetDistrictByCode = code => `SELECT * FROM District WHERE code='${code}'`;
+
 module.exports = {
     AddDistrict,
     GetDistrict,
     GetDistrictsByIdCar,
-    GetDistrictById
+    GetDistrictById,
+    GetDistrictByCode
 }

@@ -1,5 +1,8 @@
 const database = require("../Config/Database");
 const querryState = require("../Operation/Car");
+const querryStateCity = require("../Operation/City");
+const querryStateDistrict = require("../Operation/District");
+const querryStateManu = require("../Operation/Manufactor")
 const uuid = require("uuid");
 const { DataQuerry, DataMutation, DataQuerries, DataParser } = require("../Util");
 
@@ -22,7 +25,7 @@ class CarController {
                 avatar: filename,
                 created_at: new Date
             }
-            DataMutation(querryState.addCar(insertCar), res, 'A-+dd success')
+            DataMutation(querryState.addCar(insertCar), res, 'Add success')
         } catch (e) {
             console.log(e);
             res.json({
@@ -129,16 +132,18 @@ class CarController {
     }
     static async GetAvailableCarByDistrict(req,res,next){
         try{
-            const { idDistrict } = req.query;
-            database.query(querryState.getCarsByIdDistrict(idDistrict),(err,result) => {
-                const availableCars = DataParser(result);
-                let arr = [];
-                availableCars.map(car => {
-                    arr.push(car.idCar);
+            const { code } = req.query;
+            database.query(querryStateDistrict.GetDistrictByCode(code), (err, districts) => {
+                const parsedDistrict = DataParser(districts);
+                database.query(querryState.getCarsByIdDistrict(parsedDistrict[0].id), (err,result) => {
+                    const availableCars = DataParser(result);
+                    let arr = [];
+                    availableCars.map(car => {
+                        arr.push(car.idCar);
+                    })
+                    DataQuerries(querryState.getCarByIdCars(arr),res);
                 })
-                DataQuerries(querryState.getCarByIdCars(arr),res);
             })
-            
         }catch(e){
             console.log(e);
             res.json({
@@ -152,8 +157,10 @@ class CarController {
     }
     static async GetAvailableCarByCity(req,res,next) { 
         try{
-            const { idCity } = req.query;
-            database.query((querryState.getDistrictsByIdCity(idCity)),(err , districts) => {
+            const { code } = req.query;
+            database.query(querryStateCity.GetCityByCode(code), (err, city) => {
+                const parseCity = DataParser(city);
+                database.query((querryState.getDistrictsByIdCity(parseCity[0].id)),(err , districts) => {
                 let arrDistrictId = [];
                 let arrCarId = [];
                 const parseDistrict = DataParser(districts);
@@ -165,7 +172,8 @@ class CarController {
                     parsedResult.forEach( car => {
                         arrCarId.push(car.idCar)
                     })
-                    DataQuerries(querryState.getCarByIdCars(arrCarId), res);
+                        DataQuerries(querryState.getCarByIdCars(arrCarId), res);
+                    })
                 })
             });
         } catch(e) {
