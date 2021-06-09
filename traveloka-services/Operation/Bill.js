@@ -22,11 +22,11 @@ const UpdateBillStatus = (id,status) => {
     WHERE id = '${id}' `;
 }
 
-const GetListBill = () => 'SELECT * FROM Bill';
+const GetListBill = () => 'SELECT * FROM Bill,Car WHERE Car.id=Bill.idCar';
 
-const GetBillByIdSaler = id => `SELECT * FROM Bill WHERE id_saler='${id}'`;
+const GetBillByIdSaler = id => `SELECT * FROM Bill,Car WHERE id_saler='${id}' AND Car.id = Bill.idCar`;
 
-const GetBillByIdUser = id => `SELECT * FROM Bill WHERE idUser='${id}'`
+const GetBillByIdUser = id => `SELECT * FROM Bill,Car WHERE idUser='${id}' AND Car.id = Bill.idCar`
 
 module.exports = {
     GetBillById,

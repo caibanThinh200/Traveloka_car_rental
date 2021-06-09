@@ -53,6 +53,15 @@ class BillController {
         }
     }
 
+    static async GetBillById(req, res, next) {
+        try {
+            const { id } = req.params;
+            DataQuerry(GetBillById(id), res);
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
     static async GetBillByIdUser(req,res,next) {
         try {
             const { id } = req.params;
