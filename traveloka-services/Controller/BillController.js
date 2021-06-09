@@ -1,5 +1,5 @@
 const { DataMutation, DataQuerries, DataQuerry, DataParser } = require("../Util")
-const { AddBill, GetBillById, GetListBill, UpdateBillStatus } = require("../Operation/Bill"); 
+const { AddBill, GetBillById, GetListBill, UpdateBillStatus, GetBillByIdUser, GetBillByIdSaler } = require("../Operation/Bill"); 
 const QuerryBuilder = require("../Config/Database");
 const uuid = require("uuid");
 const Stripe = require("stripe");
@@ -47,6 +47,40 @@ class BillController {
                 error: {
                     code: 1000,
                     message: "Thêm hóa đơn thất bại"
+                },
+                result: null
+            })
+        }
+    }
+
+    static async GetBillByIdUser(req,res,next) {
+        try {
+            const { id } = req.params;
+            DataQuerries(GetBillByIdUser(id), res);
+        } catch(e) {
+            console.log(e);
+            res.json({
+                status:"FAILED",
+                error: {
+                    code: 1000,
+                    message: "Lấy ds hóa đơn thất bại"
+                },
+                result: null
+            })
+        }
+    }
+
+    static async GetBillByIdSaler(req,res,next) {
+        try {
+            const { id } = req.params;
+            DataQuerries(GetBillByIdSaler(id), res);
+        } catch(e) {
+            console.log(e);
+            res.json({
+                status:"FAILED",
+                error: {
+                    code: 1000,
+                    message: "Lấy ds hóa đơn thất bại"
                 },
                 result: null
             })

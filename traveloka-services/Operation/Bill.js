@@ -23,9 +23,16 @@ const UpdateBillStatus = (id,status) => {
 }
 
 const GetListBill = () => 'SELECT * FROM Bill';
+
+const GetBillByIdSaler = id => `SELECT * FROM Bill WHERE id_saler='${id}'`;
+
+const GetBillByIdUser = id => `SELECT * FROM Bill WHERE idUser='${id}'`
+
 module.exports = {
     GetBillById,
     AddBill,
     GetListBill,
-    UpdateBillStatus
+    UpdateBillStatus,
+    GetBillByIdSaler,
+    GetBillByIdUser
 }
