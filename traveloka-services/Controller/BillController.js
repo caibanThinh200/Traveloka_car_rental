@@ -115,11 +115,14 @@ class BillController {
     static async EndTimeHiringController(req,res,next) {
         try{
             const { idBill } = req.params;
-            const { endDay } = req.body;
+            const { endDate } = req.query;
+            const endDay = new Date(endDate)
             const currentTime = new Date;
-                if ( currentTime.getDay() === endDay.getDay() && currentTime.getSeconds() === endDay.getSeconds()) {
-                   DataMutation(UpdateBillStatus( idBill, "DONE" ), "Cập nhật hóa đơn thành công");
+            console.log(currentTime.getDate() >= endDay.getDate() && currentTime.getMinutes() >= endDay.getMinutes() &&currentTime.getSeconds() >= endDay.getSeconds())
+                if (currentTime.getDate() >= endDay.getDate() && currentTime.getMinutes() >= endDay.getMinutes() && currentTime.getSeconds() >= endDay.getSeconds()) {
+                    DataMutation(UpdateBillStatus( idBill, "DONE" ), res, "Cập nhật hóa đơn thành công");
                 }
+                
         } catch(e) {
             console.log(e);
             res.json({
