@@ -117,7 +117,7 @@ class BillController {
             const { idBill } = req.params;
             const { endDate } = req.query;
             const endDay = new Date(endDate)
-            const currentTime = new Date;
+            const currentTime = new Date("2021-6-20");
             console.log(currentTime.getDate() >= endDay.getDate() && currentTime.getMinutes() >= endDay.getMinutes() &&currentTime.getSeconds() >= endDay.getSeconds())
                 if (currentTime.getDate() >= endDay.getDate() && currentTime.getMinutes() >= endDay.getMinutes() && currentTime.getSeconds() >= endDay.getSeconds()) {
                     DataMutation(UpdateBillStatus( idBill, "DONE" ), res, "Cập nhật hóa đơn thành công");

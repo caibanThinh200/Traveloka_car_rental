@@ -22,9 +22,9 @@ const UpdateBillStatus = (id,status) => {
     WHERE id = '${id}' `;
 }
 
-const GetListBill = () => 'SELECT * FROM Bill,Car WHERE Car.id=Bill.idCar';
+const GetListBill = () => 'SELECT Bill.id as idBill,Car.id as idCar FROM Bill,Car WHERE Car.id=Bill.idCar';
 
-const GetBillByIdSaler = id => `SELECT * FROM Bill,Car WHERE id_saler='${id}' AND Car.id = Bill.idCar`;
+const GetBillByIdSaler = id => `SELECT Bill.id as idBill,Car.id as idCar, idUser, idSaler, id_saler, total, startDate, endDate, status, address, name FROM Bill,Car WHERE id_saler='${id}' AND Car.id = Bill.idCar`;
 
 const GetBillByIdUser = id => `SELECT * FROM Bill,Car WHERE idUser='${id}' AND Car.id = Bill.idCar`
 

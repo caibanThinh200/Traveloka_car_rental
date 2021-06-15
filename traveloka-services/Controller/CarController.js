@@ -10,7 +10,7 @@ class CarController {
     static async AddCarController(req, res, next) {
         try {
             const { idSaler, quantity, Seat, idManufactor, typeCar, self_drive_price, driver_price, insurance, name } = req.body;
-            const filename = req.file.filename ? req.file.filename : '';
+            const filename = req.file && req.file.filename ? req.file.filename : "default";
             const insertCar = {
                 id: uuid.v4(),
                 idSaler,
@@ -19,12 +19,13 @@ class CarController {
                 Seat,
                 idManufactor,
                 typeCar,
-                self_drive_price,
-                driver_price,
-                insurance,
-                avatar: filename,
+                self_drive_price: self_drive_price || 100000,
+                driver_price: driver_price || 100000,
+                insurance: insurance || "",
+                avatar: filename || "",
                 created_at: new Date
             }
+            console.log(insertCar);
             DataMutation(querryState.addCar(insertCar), res, 'Add success')
         } catch (e) {
             console.log(e);
