@@ -1,7 +1,7 @@
 const GetBillById = (id) => `SELECT * FROM Bill WHERE id = ${id}`;
 
-const AddBill = ({id, idUser, idSaler, total , address, startDate, endDate, status, idCar, created_at}) => {
-    return `INSERT INTO Bill (id,idUser,id_saler,status,total,address,startDate,endDate,created_at,idCar) values 
+const AddBill = ({id, idUser, idSaler, total , address, startDate, endDate, status, idCar, phone, created_at}) => {
+    return `INSERT INTO Bill (id,idUser,id_saler,status,total,address,phone,startDate,endDate,created_at,idCar) values 
         (
             '${id}',
             '${idUser}',
@@ -9,6 +9,7 @@ const AddBill = ({id, idUser, idSaler, total , address, startDate, endDate, stat
             '${status}',
             '${total}',
             '${address}',
+            '${phone}',
             '${startDate}',
             '${endDate}',
             '${created_at}',
@@ -28,11 +29,22 @@ const GetBillByIdSaler = id => `SELECT Bill.id as idBill,Car.id as idCar, idUser
 
 const GetBillByIdUser = id => `SELECT * FROM Bill,Car WHERE idUser='${id}' AND Car.id = Bill.idCar`
 
+const AddNewKPI = ({id, month, year, total, result, target}) => 
+    `INSERT INTO KPI(id, month, year, total, result, target) VALUES (
+        '${id}',
+        '${month}',
+        '${year}',
+        '${total}',
+        '${result}',
+        '${target}'
+    )`
+
 module.exports = {
     GetBillById,
     AddBill,
     GetListBill,
     UpdateBillStatus,
     GetBillByIdSaler,
-    GetBillByIdUser
+    GetBillByIdUser,
+    AddNewKPI
 }

@@ -1,8 +1,9 @@
 const { DataMutation, DataQuerries, DataQuerry, DataParser } = require("../Util")
-const { AddBill, GetBillById, GetListBill, UpdateBillStatus, GetBillByIdUser, GetBillByIdSaler } = require("../Operation/Bill"); 
+const { AddBill, GetBillById, GetListBill, UpdateBillStatus, GetBillByIdUser, GetBillByIdSaler, AddNewKPI } = require("../Operation/Bill"); 
 const QuerryBuilder = require("../Config/Database");
 const uuid = require("uuid");
 const Stripe = require("stripe");
+const moment = require("moment")
 require("dotenv").config();
 
 const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
@@ -10,7 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 class BillController {
     static async AddBillController(req,res,next) {
         try {
-            const { idUser, total, startDate,endDate, listCar, idSaler, address } = req.body;
+            const { idUser, total, startDate,endDate, listCar, idSaler, address, phone } = req.body;
             switch(false) {
                 case idSaler:
                     res.json("Invalid idSaler");
@@ -33,6 +34,7 @@ class BillController {
                         startDate: new Date(startDate) || "",
                         endDate: new Date(endDate) || "",
                         address: address || "",
+                        phone: phone || 0,
                         idCar : listCar || "",
                         status: "Waiting",
                         created_at : new Date
@@ -116,13 +118,11 @@ class BillController {
         try{
             const { idBill } = req.params;
             const { endDate } = req.query;
-            const endDay = new Date(endDate)
-            const currentTime = new Date("2021-6-20");
-            console.log(currentTime.getDate() >= endDay.getDate() && currentTime.getMinutes() >= endDay.getMinutes() &&currentTime.getSeconds() >= endDay.getSeconds())
-                if (currentTime.getDate() >= endDay.getDate() && currentTime.getMinutes() >= endDay.getMinutes() && currentTime.getSeconds() >= endDay.getSeconds()) {
-                    DataMutation(UpdateBillStatus( idBill, "DONE" ), res, "Cập nhật hóa đơn thành công");
-                }
-                
+            const endDay = moment(endDate).format()
+            const currentTime = moment(new Date()).format();
+            if (currentTime > endDay) {
+                DataMutation(UpdateBillStatus( idBill, "DONE" ), res, "Cập nhật hóa đơn thành công");
+            }
         } catch(e) {
             console.log(e);
             res.json({
@@ -151,27 +151,43 @@ class BillController {
         }
     }
     static async StripePaymentController (req,res,next) {
-        try{
-            const session = await stripe.checkout.sessions.create({
-                payment_method_types: ['card'],
-                line_items: [
-                  {
-                    price_data: {
-                      currency: 'usd',
-                      product_data: {
-                        name: 'Stubborn Attachments',
-                        images: ['https://i.imgur.com/EHyR2nP.png'],
-                      },
-                      unit_amount: 2000,
-                    },
-                    quantity: 1,
-                  },
-                ],
-                mode: 'payment',
-                success_url: `localhost:3301/bill/payment`,
-                cancel_url:  `localhost:3301/bill/payment`,
-              });
-              res.json({ id: session.id });
+        try {
+            const { amount, id, car } = req.body;
+            const payment = await stripe.paymentIntents.create({
+                amount,
+                currency: "USD",
+                description: car,
+                payment_method: id,
+                confirm: true
+            })
+            res.json({
+                status:"SUCCESS",
+                message: "Payment successful",
+                payment,
+                success: true
+            })
+        } catch (error) {
+            console.log("Error", error)
+            res.json({
+                status: "FAILED",
+                message: "Payment failed",
+                success: false
+            })
+        }
+    }
+
+    static async AddNewMonthKPIController(req, res, next) {
+        try {
+            const { total, result, month, year } = req.body;
+            const insertKPI = {
+                id: uuid.v4(),
+                month: new Date(month).getMonth() || new Date().getMonth(),
+                year: new Date(year).getFullYear() || new Date().getFullYear(),
+                target: 10000000 || 0,
+                total: total || 0,
+                result : result || 0
+            }
+            DataMutation(AddNewKPI(insertKPI), res, "Add KPI success")
         } catch(e) {
             console.log(e);
         }

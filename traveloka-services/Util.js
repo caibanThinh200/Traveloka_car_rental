@@ -3,6 +3,9 @@ const config = require("./Config/Database")
 const DataParser = data => JSON.parse(JSON.stringify(data))
 const DataMutation = (querry, response, message) => {
     config.query(querry, (err, resPacket) => {
+        if(err) {
+            console.log(err);
+        }
         const res = DataParser(resPacket);
         if (res.affectedRows) {
             response.json({
@@ -16,6 +19,9 @@ const DataMutation = (querry, response, message) => {
 
 const DataQuerries = (querry, response, message) => {
     config.query(querry, (err, resPacket) => {
+        if(err) {
+            console.log(err);
+        }
         const res = DataParser(resPacket);
         if (res) {
             response.json({
@@ -29,6 +35,9 @@ const DataQuerries = (querry, response, message) => {
 
 const DataQuerry = (querry, response, message) => {
     config.query(querry, (err, resPacket) => {
+        if(err) {
+            console.log(err);
+        }
         const res = DataParser(resPacket);
         if (res) {
             response.json({
