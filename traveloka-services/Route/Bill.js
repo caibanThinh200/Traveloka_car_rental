@@ -8,6 +8,7 @@ route.get("/customer/:id", BillController.GetBillByIdUser);
 route.get("/saler/:id", BillController.GetBillByIdSaler);
 route.get("/endDate/:idBill", BillController.EndTimeHiringController);
 route.post("/stripe", BillController.StripePaymentController);
-route.post("/KPI", BillController.AddNewMonthKPIController)
+route.post("/KPI", BillController.AddNewMonthKPIController);
+route.get("/KPI/:id", BillController.GetAllMonthKPIOfYearController);
 
 module.exports = route;

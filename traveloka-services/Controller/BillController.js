@@ -1,5 +1,5 @@
 const { DataMutation, DataQuerries, DataQuerry, DataParser } = require("../Util")
-const { AddBill, GetBillById, GetListBill, UpdateBillStatus, GetBillByIdUser, GetBillByIdSaler, AddNewKPI } = require("../Operation/Bill"); 
+const { AddBill, GetBillById, GetListBill, UpdateBillStatus, GetBillByIdUser, GetBillByIdSaler, AddNewKPI, GetMonthKPIByYear } = require("../Operation/Bill"); 
 const QuerryBuilder = require("../Config/Database");
 const uuid = require("uuid");
 const Stripe = require("stripe");
@@ -11,7 +11,7 @@ const stripe = new Stripe(process.env.STRIPE_PRIVATE_KEY);
 class BillController {
     static async AddBillController(req,res,next) {
         try {
-            const { idUser, total, startDate,endDate, listCar, idSaler, address, phone } = req.body;
+            const { idUser, total, startDate,endDate, listCar, idSaler, userAddress, phone, email } = req.body;
             switch(false) {
                 case idSaler:
                     res.json("Invalid idSaler");
@@ -33,13 +33,14 @@ class BillController {
                         total : total || 0,
                         startDate: new Date(startDate) || "",
                         endDate: new Date(endDate) || "",
-                        address: address || "",
+                        address: userAddress || "",
                         phone: phone || 0,
+                        gmail: email || "",
                         idCar : listCar || "",
                         status: "Waiting",
                         created_at : new Date
                     };
-                    DataMutation(AddBill(billInsert), res, {id: billInsert.id , address: address});
+                    DataMutation(AddBill(billInsert), res, {id: billInsert.id , address: userAddress});
                 }
             }
         } catch(e) {
@@ -101,7 +102,8 @@ class BillController {
     static async StartTimeHiringController(req,res,next) {
         try {
             const { id } = req.params
-               DataMutation(UpdateBillStatus( id, "In progress" ), res, "Cập nhật hóa đơn thành công");
+            const { payment } = req.body;
+               DataMutation(UpdateBillStatus( id, "In progress", payment), res, "Cập nhật hóa đơn thành công");
         } catch(e) {
             console.log(e);
             res.json({
@@ -178,11 +180,12 @@ class BillController {
 
     static async AddNewMonthKPIController(req, res, next) {
         try {
-            const { total, result, month, year } = req.body;
+            const { total, result, month, year, partnerId } = req.body;
             const insertKPI = {
-                id: uuid.v4(),
+                id: uuid.v4() || "",
+                idSaler: partnerId || "",
                 month: new Date(month).getMonth() || new Date().getMonth(),
-                year: new Date(year).getFullYear() || new Date().getFullYear(),
+                year: year || new Date().getFullYear(),
                 target: 10000000 || 0,
                 total: total || 0,
                 result : result || 0
@@ -190,6 +193,26 @@ class BillController {
             DataMutation(AddNewKPI(insertKPI), res, "Add KPI success")
         } catch(e) {
             console.log(e);
+            res.json({
+                status: "FAILED",
+                message: "Add KPI failed",
+                success: false
+            })
+        }
+    }
+
+    static async GetAllMonthKPIOfYearController(req, res, next) {
+        try {
+            const { year } = req.query;
+            const { id } = req.params
+            DataQuerries(GetMonthKPIByYear(year,id), res)
+        } catch(e) {
+            console.log(e);
+            res.json({
+                status: "FAILED",
+                message: "Get KPI failed",
+                success: false
+            })
         }
     }
 }
