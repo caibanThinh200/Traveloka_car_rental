@@ -7,6 +7,7 @@ const DataMutation = (querry, response, message) => {
             console.log(err);
         }
         const res = DataParser(resPacket);
+        console.log(res)
         if (res.affectedRows) {
             response.json({
                 status: "SUCCESS",

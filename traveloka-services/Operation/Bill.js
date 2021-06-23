@@ -26,13 +26,16 @@ const UpdateBillStatus = (id,status, payment, idStripe) => {
     WHERE id = '${id}' `;
 }
 
-const DeleteBill = (id) => `DELETE FROM Bill WHERE id='${id}'`; 
+const DeleteBill = (id) =>{
+    console.log(1231232113)
+    return  `DELETE FROM Bill WHERE id='${id}'`
+}; 
 
 const GetListBill = () => 'SELECT Bill.id as idBill,Car.id as idCar FROM Bill,Car WHERE Car.id=Bill.idCar';
 
 const GetBillByIdSaler = id => `SELECT Bill.id as idBill,Car.id as idCar, idUser, idSaler, id_saler, total, startDate, endDate, status, Bill.address,Bill.gmail,Bill.created_at,payment,id_stripe ,name FROM Bill,Car WHERE id_saler='${id}' AND Car.id = Bill.idCar`;
 
-const GetBillByIdUser = id => `SELECT * FROM Bill,Car WHERE idUser='${id}' AND Car.id = Bill.idCar`
+const GetBillByIdUser = id => `SELECT Bill.id as idBill,Car.id as idCar, idUser, idSaler, id_saler, total, startDate, endDate, status, Bill.address,Bill.gmail,Bill.created_at,payment,id_stripe ,name FROM Bill,Car WHERE idUser='${id}' AND Car.id = Bill.idCar`
 
 const AddNewKPI = ({id, month, year, total, result, target, idSaler}) => 
     `INSERT INTO KPI(id, month, year, total, result, target, idSaler) VALUES (

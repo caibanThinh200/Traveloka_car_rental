@@ -102,7 +102,7 @@ class BillController {
     static async DisableBillController(req, res, next) {
         try {
             const { id } = req.params
-            console.log("disable", id)
+            console.log(id);
             DataMutation(DeleteBill(id), res, "Hủy hóa đơn thành công")
         } catch(e) {
             console.log(e);
