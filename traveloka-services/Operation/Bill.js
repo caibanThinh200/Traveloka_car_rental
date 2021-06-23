@@ -18,16 +18,19 @@ const AddBill = ({id, idUser, idSaler, total , address, startDate, endDate, stat
         )`;
     }
 
-const UpdateBillStatus = (id,status, payment) => { 
+const UpdateBillStatus = (id,status, payment, idStripe) => { 
     return `UPDATE Bill 
-    SET status = '${status}',
-    payment = '${payment}'
+    SET status = '${status}'
+    ${payment ? `,payment='${payment}'
+    ,id_stripe='${idStripe}'` : ""}
     WHERE id = '${id}' `;
 }
 
+const DeleteBill = (id) => `DELETE FROM Bill WHERE id='${id}'`; 
+
 const GetListBill = () => 'SELECT Bill.id as idBill,Car.id as idCar FROM Bill,Car WHERE Car.id=Bill.idCar';
 
-const GetBillByIdSaler = id => `SELECT Bill.id as idBill,Car.id as idCar, idUser, idSaler, id_saler, total, startDate, endDate, status, Bill.address, name FROM Bill,Car WHERE id_saler='${id}' AND Car.id = Bill.idCar`;
+const GetBillByIdSaler = id => `SELECT Bill.id as idBill,Car.id as idCar, idUser, idSaler, id_saler, total, startDate, endDate, status, Bill.address,Bill.gmail,Bill.created_at,payment,id_stripe ,name FROM Bill,Car WHERE id_saler='${id}' AND Car.id = Bill.idCar`;
 
 const GetBillByIdUser = id => `SELECT * FROM Bill,Car WHERE idUser='${id}' AND Car.id = Bill.idCar`
 
@@ -52,5 +55,6 @@ module.exports = {
     GetBillByIdSaler,
     GetBillByIdUser,
     AddNewKPI,
-    GetMonthKPIByYear
+    GetMonthKPIByYear,
+    DeleteBill
 }

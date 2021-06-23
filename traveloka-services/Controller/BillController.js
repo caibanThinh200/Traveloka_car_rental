@@ -1,5 +1,5 @@
 const { DataMutation, DataQuerries, DataQuerry, DataParser } = require("../Util")
-const { AddBill, GetBillById, GetListBill, UpdateBillStatus, GetBillByIdUser, GetBillByIdSaler, AddNewKPI, GetMonthKPIByYear } = require("../Operation/Bill"); 
+const { AddBill, GetBillById, GetListBill, UpdateBillStatus, GetBillByIdUser, GetBillByIdSaler, AddNewKPI, GetMonthKPIByYear, DeleteBill } = require("../Operation/Bill"); 
 const QuerryBuilder = require("../Config/Database");
 const uuid = require("uuid");
 const Stripe = require("stripe");
@@ -99,11 +99,31 @@ class BillController {
         }
     }
 
+    static async DisableBillController(req, res, next) {
+        try {
+            const { id } = req.params
+            console.log("disable", id)
+            DataMutation(DeleteBill(id), res, "Hủy hóa đơn thành công")
+        } catch(e) {
+            console.log(e);
+            res.json({
+                status:"FAILED",
+                error: {
+                    code: 1000,
+                    message: "Cập nhật hóa đơn thất bại"
+                },
+                result: null
+            })
+        }
+    }   
+
+    
     static async StartTimeHiringController(req,res,next) {
         try {
             const { id } = req.params
-            const { payment } = req.body;
-               DataMutation(UpdateBillStatus( id, "In progress", payment), res, "Cập nhật hóa đơn thành công");
+            const { payment,id_stripe } = req.body;
+            console.log(req.body);
+               DataMutation(UpdateBillStatus(id, payment ? "In progress" : "Delivery", payment, id_stripe), res, "Cập nhật hóa đơn thành công");
         } catch(e) {
             console.log(e);
             res.json({
@@ -116,6 +136,25 @@ class BillController {
             })
         }
     }
+
+    static async InProgressController(req, res, next) {
+        try {
+            const { id } = req.params
+            const { payment } = req.body;
+               DataMutation(UpdateBillStatus(id, "In progress"), res, "Cập nhật hóa đơn thành công");
+        } catch(e) {
+            console.log(e);
+            res.json({
+                status:"FAILED",
+                error: {
+                    code: 1000,
+                    message: "Cập nhật hóa đơn thất bại"
+                },
+                result: null
+            })
+        }
+    }
+
     static async EndTimeHiringController(req,res,next) {
         try{
             const { idBill } = req.params;
@@ -155,6 +194,7 @@ class BillController {
     static async StripePaymentController (req,res,next) {
         try {
             const { amount, id, car } = req.body;
+            console.log(req.body)
             const payment = await stripe.paymentIntents.create({
                 amount,
                 currency: "USD",
@@ -178,15 +218,42 @@ class BillController {
         }
     }
 
+    static async stripeRefundController(req, res, next) {
+        try {
+            const { id } = req.params;
+            const charge = await stripe.charges.list();
+            const a = charge.data.filter(item => {
+                if(item.payment_method === id) 
+                    console.log(item)
+                    return item;  
+            })
+            
+            const refund = await stripe.refunds.create({
+                charge: a[0].id,
+              });
+              
+            res.json({
+            status:"SUCCESS",
+            message: "Payment successful",
+            refund,
+            success: true
+        })
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
     static async AddNewMonthKPIController(req, res, next) {
         try {
-            const { total, result, month, year, partnerId } = req.body;
+            const { total, result, month, year, partnerId, cash, visa } = req.body;
             const insertKPI = {
                 id: uuid.v4() || "",
                 idSaler: partnerId || "",
                 month: new Date(month).getMonth() || new Date().getMonth(),
                 year: year || new Date().getFullYear(),
                 target: 10000000 || 0,
+                cash: cash || 0,
+                visa: visa || 0,
                 total: total || 0,
                 result : result || 0
             }
